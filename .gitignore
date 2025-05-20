@@ -1,0 +1,40 @@
+# Node modules (backend y frontend)
+node_modules/
+**/node_modules/
+
+# Build output (frontend)
+dist/
+build/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# MacOS files
+.DS_Store
+
+# VSCode settings
+.vscode/
+
+# IDE or editor folders
+.idea/
+
+# npm package locks
+package-lock.json
+yarn.lock
+
+# Output folders from IDEs/builds (opcional)
+out/
+coverage/
+
+# Otros archivos temporales
+*.tmp
+*.swp
