@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 interface Pelicula {
-  title: string;
-  genre: string;
-  duration: number;
+  titulo: string;
+  genero: string;
+  duracion: number;
+  estado: 'cartelera' | 'pronto' | 'fuera';
 }
 
 const IteratorViewer: React.FC = () => {
@@ -15,7 +16,7 @@ const IteratorViewer: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         console.log('Películas:', data);
-        setPeliculas(data);
+        setPeliculas(data.cartelera);
       })
       .catch(console.error);
   }, []);
@@ -31,13 +32,13 @@ const IteratorViewer: React.FC = () => {
   return (
     <div>
       <h2>Película actual</h2>
-      <p><strong>Título:</strong> {current.title}</p>
-      <p><strong>Género:</strong> {current.genre}</p>
-      <p><strong>Duración:</strong> {current.duration} min</p>
+      <p><strong>Título:</strong> {current.titulo}</p>
+      <p><strong>Género:</strong> {current.genero}</p>
+      <p><strong>Duración:</strong> {current.duracion} min</p>
+      <p><strong>Estado:</strong> {current.estado}</p>
       <button onClick={nextPelicula}>Siguiente</button>
     </div>
   );
 };
 
 export default IteratorViewer;
-
