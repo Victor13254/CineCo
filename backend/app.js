@@ -22,6 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
   console.error('🔴 Error al conectar a MongoDB:', err);
 });
 
+console.log('JWT SECRET:', process.env.SECRET_JWT);
 const peliculasRoutes = require('./routes/peliculasRoutes');
 app.use('/api/peliculas', peliculasRoutes);
 
@@ -30,6 +31,9 @@ app.use('/api/comidas', comidaRoutes);
 
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
+
+const reservasRoutes = require('./routes/reservasRoutes');
+app.use('/api/reservas', reservasRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

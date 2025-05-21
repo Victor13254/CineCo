@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Navbar from './templates/Navbar';
 import Footer from './templates/Footer';
 import Home from './pages/Home';
+import Reserva from './pages/Reservas';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />
             <Route path="*" element={<Home />} />
+            <Route path="/reservas" element={<Reserva />} />
           </Routes>
         </main>
 
