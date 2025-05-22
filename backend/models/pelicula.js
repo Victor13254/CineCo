@@ -4,10 +4,10 @@ const PeliculaSchema = new mongoose.Schema({
   titulo: String,
   genero: String,
   duracion: Number, // en minutos
-  funciones: [       // Aquí se aplica el patrón Iterator
+  funciones: [
     {
-      sala: String,
-      horario: String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Funcion'
     }
   ],
   estado: {
