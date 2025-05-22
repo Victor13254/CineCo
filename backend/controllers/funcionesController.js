@@ -1,27 +1,23 @@
 const Funcion = require('../models/funcion');
 
-// Crear una nueva función
+// Crear una nueva función con sillas generadas automáticamente
 const crearFuncion = async (req, res) => {
   try {
-    const {
-      sala,
-      horario,
-      sillasNormalesTotales,
-      sillasNormalesDisponibles,
-      sillasPreferencialesTotales,
-      sillasPreferencialesDisponibles,
-    } = req.body;
+    const { sala, horario, cantidadSillasNormales, cantidadSillasPreferenciales } = req.body;
 
-    const funcion = new Funciones({
-      sala,
-      horario,
-      sillasNormalesTotales,
-      sillasNormalesDisponibles,
-      sillasPreferencialesTotales,
-      sillasPreferencialesDisponibles,
-    });
+    let sillas = [];
+    let numero = 1;
 
+    for (let i = 0; i < cantidadSillasNormales; i++) {
+      sillas.push({ numero: numero++, tipo: 'normal', estado: 'disponible' });
+    }
+    for (let i = 0; i < cantidadSillasPreferenciales; i++) {
+      sillas.push({ numero: numero++, tipo: 'preferencial', estado: 'disponible' });
+    }
+
+    const funcion = new Funcion({ sala, horario, sillas });
     await funcion.save();
+
     res.status(201).json(funcion);
   } catch (error) {
     console.error(error);
@@ -40,7 +36,7 @@ const obtenerFunciones = async (req, res) => {
   }
 };
 
-// Obtener función por ID
+// Obtener una función por ID
 const obtenerFuncionPorId = async (req, res) => {
   try {
     const funcion = await Funcion.findById(req.params.id);
@@ -52,7 +48,7 @@ const obtenerFuncionPorId = async (req, res) => {
   }
 };
 
-// Actualizar función (ejemplo: actualizar horarios o sala)
+// Actualizar datos generales de una función (sala, horario)
 const actualizarFuncion = async (req, res) => {
   try {
     const { id } = req.params;
@@ -69,7 +65,7 @@ const actualizarFuncion = async (req, res) => {
   }
 };
 
-// Eliminar función
+// Eliminar una función
 const eliminarFuncion = async (req, res) => {
   try {
     const { id } = req.params;
@@ -84,35 +80,25 @@ const eliminarFuncion = async (req, res) => {
   }
 };
 
-// Actualizar disponibilidad de sillas (ejemplo: reservar o liberar sillas)
-const actualizarDisponibilidad = async (req, res) => {
+// Actualizar estado de sillas específicas
+const actualizarSillas = async (req, res) => {
   try {
     const { id } = req.params;
-    const {
-      sillasNormalesDisponibles,
-      sillasPreferencialesDisponibles,
-    } = req.body;
+    const { sillasActualizadas } = req.body; // Ejemplo: [{ numero: 5, estado: 'ocupada' }, ...]
 
     const funcion = await Funcion.findById(id);
     if (!funcion) return res.status(404).json({ error: 'Función no encontrada' });
 
-    // Opcional: validar que no se excedan los totales o sean negativas
-    if (
-      sillasNormalesDisponibles < 0 || sillasNormalesDisponibles > funcion.sillasNormalesTotales ||
-      sillasPreferencialesDisponibles < 0 || sillasPreferencialesDisponibles > funcion.sillasPreferencialesTotales
-    ) {
-      return res.status(400).json({ error: 'Cantidad de sillas inválida' });
-    }
-
-    funcion.sillasNormalesDisponibles = sillasNormalesDisponibles;
-    funcion.sillasPreferencialesDisponibles = sillasPreferencialesDisponibles;
+    funcion.sillas = funcion.sillas.map(silla => {
+      const actualizada = sillasActualizadas.find(s => s.numero === silla.numero);
+      return actualizada ? { ...silla, estado: actualizada.estado } : silla;
+    });
 
     await funcion.save();
-
     res.status(200).json(funcion);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error actualizando la disponibilidad' });
+    res.status(500).json({ error: 'Error actualizando sillas' });
   }
 };
 
@@ -122,5 +108,5 @@ module.exports = {
   obtenerFuncionPorId,
   actualizarFuncion,
   eliminarFuncion,
-  actualizarDisponibilidad,
+  actualizarSillas
 };

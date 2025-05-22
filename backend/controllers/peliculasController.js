@@ -47,7 +47,7 @@ const cambiarEstadoPelicula = async (req, res) => {
 const obtenerPeliculas = async (req, res) => {
   try {
     // Traemos películas con funciones pobladas (solo sala y horario)
-    const peliculas = await Pelicula.find().populate('funciones', 'sala horario');
+    const peliculas = await Pelicula.find().populate('funciones', 'sala horario sillas');
 
     const funcionesTotales = [];
 

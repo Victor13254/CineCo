@@ -31,10 +31,10 @@ async function seedPeliculas() {
 
     // Cambia estos IDs por los que te arroje seedFunciones.js
     const funcionesIds = [
-      '682ea52d5da31c45a38f7738', // Sala 1 - 15:00
-      '682ea52d5da31c45a38f7739', // Sala 2 - 18:00
-      '682ea52d5da31c45a38f773a', // Sala 3 - 14:00
-      '682ea52d5da31c45a38f773b', // Sala 4 - 20:00
+      '682f865de199a3b9e0f2b002', // Sala 1 - 15:00
+      '682f865de199a3b9e0f2b04e', // Sala 2 - 18:00
+      '682f865de199a3b9e0f2b089', // Sala 3 - 14:00
+      '682f865de199a3b9e0f2b0e3', // Sala 4 - 20:00
     ];
 
     const peliculasEjemplo = [

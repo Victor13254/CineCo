@@ -22,7 +22,6 @@ mongoose.connect(process.env.MONGO_URI, {
   console.error('🔴 Error al conectar a MongoDB:', err);
 });
 
-console.log('JWT SECRET:', process.env.SECRET_JWT);
 const peliculasRoutes = require('./routes/peliculasRoutes');
 app.use('/api/peliculas', peliculasRoutes);
 

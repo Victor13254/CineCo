@@ -1,24 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const funcionController = require('../controllers/funcionesController');
 
-const funcionesController = require('../controllers/funcionesController');
+router.post('/', funcionController.crearFuncion);
+router.get('/', funcionController.obtenerFunciones);
+router.get('/:id', funcionController.obtenerFuncionPorId);
+router.put('/:id', funcionController.actualizarFuncion);
+router.delete('/:id', funcionController.eliminarFuncion);
 
-// Crear función
-router.post('/', funcionesController.crearFuncion);
-
-// Obtener todas las funciones
-router.get('/', funcionesController.obtenerFunciones);
-
-// Obtener función por ID
-router.get('/:id', funcionesController.obtenerFuncionPorId);
-
-// Actualizar función
-router.put('/:id', funcionesController.actualizarFuncion);
-
-// Eliminar función
-router.delete('/:id', funcionesController.eliminarFuncion);
-
-// Actualizar disponibilidad de sillas
-router.patch('/:id/disponibilidad', funcionesController.actualizarDisponibilidad);
+// Ruta para actualizar el estado de las sillas
+router.put('/:id/sillas', funcionController.actualizarSillas);
 
 module.exports = router;

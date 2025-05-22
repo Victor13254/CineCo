@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
+interface Silla {
+  _id: string;
+  numero: string;
+  tipo: 'normal' | 'preferencial';
+  estado: 'disponible' | 'ocupado';
+}
+
+interface Funcion {
+  _id: string;
+  horario: string;
+  sala: string;
+  sillas: Silla[];
+}
+
 interface Pelicula {
   titulo: string;
   genero: string;
   duracion: number;
   estado: 'cartelera' | 'pronto' | 'fuera';
-  funciones: { horario: string; sala: string }[]; // Para pasos siguientes
+  funciones: Funcion[];
 }
 
 interface Props {
