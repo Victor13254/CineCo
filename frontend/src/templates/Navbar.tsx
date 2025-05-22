@@ -38,7 +38,7 @@ const Navbar = () => {
                     const dropdownToggle = dropdownRef.current.querySelector('button.dropdown-toggle') as HTMLElement;
                     dropdownToggle?.click();
                 }
-                window.location.reload();
+               window.location.reload();
             } else {
                 alert(data.message || 'Error al iniciar sesión');
             }

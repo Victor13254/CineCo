@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Reserva from './pages/Reservas';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import ProtectedRoute from './components/ProtectedRoute'; 
 
 const App = () => {
   return (
@@ -21,7 +22,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />
             <Route path="*" element={<Home />} />
-            <Route path="/reservas" element={<Reserva />} />
+            <Route path="/reservas" element={<ProtectedRoute><Reserva /></ProtectedRoute>} />
+
           </Routes>
         </main>
 
