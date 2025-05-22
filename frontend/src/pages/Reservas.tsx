@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import IteratorViewer from '../components/IteratorViewer';
+import { toast } from 'react-toastify';
 
 interface Funcion {
   horario: string;
@@ -36,7 +37,7 @@ const Reserva = () => {
 
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Debes iniciar sesión para hacer una reserva');
+      toast.error('Debes iniciar sesión para hacer una reserva');
       navigate('/login'); // o donde tengas el login
       return;
     }
@@ -65,15 +66,15 @@ const Reserva = () => {
       });
 
       if (response.ok) {
-        alert('Reserva guardada con éxito');
+        toast.success('Reserva guardada con éxito');
         navigate('/home');
       } else {
         const data = await response.json();
-        alert(data.message || 'Error al guardar la reserva');
+        toast.error(data.message || 'Error al guardar la reserva');
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
-      alert('Error al conectar con el servidor');
+      toast.error('Error al conectar con el servidor');
     }
   };
 

@@ -1,12 +1,14 @@
 import { useEffect, type JSX } from 'react';
 import { Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (!token) {
-      alert('Debes iniciar sesión para acceder');
+      toast.error('Debes iniciar sesión para acceder');
     }
   }, [token]);
 

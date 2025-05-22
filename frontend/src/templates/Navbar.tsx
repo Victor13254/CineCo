@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const [correo, setCorreo] = useState('');
     const [contraseña, setContraseña] = useState('');
     const [token, setToken] = useState(localStorage.getItem('token') || null);
-    const navigate = useNavigate();
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const Navbar = () => {
             if (res.ok && data.token) {
                 localStorage.setItem('token', data.token);
                 setToken(data.token);
-                alert('¡Login exitoso!');
+                toast.success('¡Login exitoso!');
                 setCorreo('');
                 setContraseña('');
                 // Cerrar dropdown manualmente
@@ -40,10 +40,10 @@ const Navbar = () => {
                 }
                window.location.reload();
             } else {
-                alert(data.message || 'Error al iniciar sesión');
+                toast.error(data.message || 'Error al iniciar sesión');
             }
         } catch {
-            alert('Error de red');
+            toast.error('Error de red');
         }
     };
 

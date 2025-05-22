@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/Register.css";
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -32,17 +33,17 @@ const Register = () => {
     e.preventDefault();
 
     if (form.correo !== form.confirmarCorreo) {
-      alert('Los correos no coinciden');
+      toast.warning('Los correos no coinciden');
       return;
     }
 
     if (form.contraseña !== form.confirmarContraseña) {
-      alert('Las contraseñas no coinciden');
+      toast.warning('Las contraseñas no coinciden');
       return;
     }
 
     if (!form.dia || !form.mes || !form.anio) {
-      alert('Por favor selecciona una fecha de nacimiento completa');
+      toast.warning('Por favor selecciona una fecha de nacimiento completa');
       return;
     }
 
@@ -51,7 +52,7 @@ const Register = () => {
     const anioNum = parseInt(form.anio, 10);
 
     if (!esFechaValida(diaNum, mesNum, anioNum)) {
-      alert('Fecha de nacimiento inválida');
+      toast.warning('Fecha de nacimiento inválida');
       return;
     }
 
@@ -74,13 +75,13 @@ const Register = () => {
       const data = await res.json();
 
       if (res.ok) {
-        alert('Usuario registrado con éxito');
+        toast.success('Usuario registrado con éxito');
         navigate('/');
       } else {
-        alert(data.mensaje || data.error || 'Error en el registro');
+        toast.error(data.mensaje || data.error || 'Error en el registro');
       }
     } catch (error) {
-      alert('Error de red o servidor');
+      toast.error('Error de red o servidor');
     }
   };
 

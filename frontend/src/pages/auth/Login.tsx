@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+
 
 const Login = () => {
   const [correo, setCorreo] = useState('');
@@ -17,9 +19,9 @@ const Login = () => {
 
     if (res.ok && data.token) {
       localStorage.setItem('token', data.token);
-      alert('¡Login exitoso!');
+      toast.success('¡Login exitoso!');
     } else {
-      alert(data.error || 'Error al iniciar sesión');
+      toast.error(data.error || 'Error al iniciar sesión');
     }
   };
 
