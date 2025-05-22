@@ -1,48 +1,22 @@
-const mongoose = require('mongoose');
-const Funcion = require('../models/funcion');
-const Reserva = require('../models/reserva');
+const ValidarAutenticacionHandler = require('../patterns/chain/reservas/ValidarAutenticacionHandler');
+const BuscarFuncionHandler = require('../patterns/chain/reservas/BuscarFuncionHandler');
+const ValidarSillasHandler = require('../patterns/chain/reservas/ValidarSillasHandler');
+const ActualizarFuncionHandler = require('../patterns/chain/reservas/ActualizarFuncionHandler');
+const CrearReservaHandler = require('../patterns/chain/reservas/CrearReservaHandler');
 
 const crearReserva = async (req, res) => {
   try {
-    const { funcionId, sillas, pagado, pelicula } = req.body;
+    const handler = new ValidarAutenticacionHandler();
+    handler
+      .setNext(new BuscarFuncionHandler())
+      .setNext(new ValidarSillasHandler())
+      .setNext(new ActualizarFuncionHandler())
+      .setNext(new CrearReservaHandler());
 
-    if (!req.userId) {
-      return res.status(401).json({ message: 'No autorizado. Debe iniciar sesión.' });
-    }
-
-    const funcion = await Funcion.findById(funcionId);
-    if (!funcion) return res.status(404).json({ message: 'Función no encontrada' });
-
-    // Validar y actualizar solo las sillas seleccionadas
-    for (const sillaSeleccionada of sillas) {
-      const index = funcion.sillas.findIndex((s) => s._id.toString() === sillaSeleccionada._id);
-      if (index === -1) {
-        return res.status(400).json({ message: `Silla con ID ${sillaSeleccionada._id} no encontrada` });
-      }
-      if (funcion.sillas[index].estado === 'ocupada') {
-        return res.status(400).json({ message: `La silla ${funcion.sillas[index].numero} ya está ocupada` });
-      }
-      funcion.sillas[index].estado = 'ocupada';
-    }
-
-    await funcion.save();
-
-    const nuevaReserva = new Reserva({
-      pelicula,
-      horario: funcion.horario,
-      sala: funcion.sala,
-      sillas,
-      pagado,
-      usuario: req.userId
-    });
-
-    await nuevaReserva.save();
-
-    res.status(201).json({ message: 'Reserva creada exitosamente' });
-
+    await handler.handle(req, res, {});
   } catch (error) {
     console.error('Error al crear reserva:', error.message);
-    res.status(500).json({ message: error.message || 'Error interno al crear la reserva' });
+    res.status(500).json({ message: 'Error interno al crear la reserva' });
   }
 };
 
