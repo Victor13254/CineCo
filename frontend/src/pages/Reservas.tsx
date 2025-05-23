@@ -119,7 +119,7 @@ const Reserva = () => {
         return (
           <div>
             <h3>Paso 1: Escoge una película</h3>
-            <IteratorViewer onSeleccionar={(pelicula: Pelicula) => setPeliculaSeleccionada(pelicula)} />
+            <IteratorViewer estado="cartelera" onSeleccionar={(pelicula: Pelicula) => setPeliculaSeleccionada(pelicula)} />
             {peliculaSeleccionada && (
               <div className="mt-3">
                 <p className="text-success">Película seleccionada: {peliculaSeleccionada.titulo}</p>

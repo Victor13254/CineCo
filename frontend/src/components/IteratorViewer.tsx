@@ -23,27 +23,31 @@ interface Pelicula {
 }
 
 interface Props {
+  estado: 'cartelera' | 'pronto' | 'fuera';
   onSeleccionar: (pelicula: Pelicula) => void;
 }
 
-const IteratorViewer: React.FC<Props> = ({ onSeleccionar }) => {
+const IteratorViewer: React.FC<Props> = ({ estado, onSeleccionar }) => {
   const [peliculas, setPeliculas] = useState<Pelicula[]>([]);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/peliculas')
       .then(res => res.json())
-      .then(data => {
-        setPeliculas(data.cartelera);
+      .then((data: { cartelera: Pelicula[] }) => {
+        // The API returns movies in a "cartelera" array
+        const allMovies = data.cartelera;
+        const filtradas = allMovies.filter(p => p.estado === estado);
+        setPeliculas(filtradas);
       })
       .catch(console.error);
-  }, []);
+  }, [estado]);
 
   const nextPelicula = () => {
     setIndex((i) => (i + 1) % peliculas.length);
   };
 
-  if (peliculas.length === 0) return <p>Cargando películas...</p>;
+  if (peliculas.length === 0) return <p>No hay películas en estado "{estado}".</p>;
 
   const current = peliculas[index];
 
