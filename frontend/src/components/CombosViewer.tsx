@@ -8,6 +8,7 @@ interface Combo {
 const CombosViewer: React.FC = () => {
   const [combos, setCombos] = useState<Combo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [indexActual, setIndexActual] = useState(0);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/comidas')
@@ -22,22 +23,24 @@ const CombosViewer: React.FC = () => {
       });
   }, []);
 
+  const handleSiguiente = () => {
+    setIndexActual((prev) => (prev + 1) % combos.length);
+  };
+
   if (loading) return <p>Cargando combos...</p>;
+
+  if (combos.length === 0) return <p>No hay combos disponibles</p>;
+
+  const comboActual = combos[indexActual];
 
   return (
     <div>
       <h2>Combos de Comida CineCo</h2>
-      {combos.length === 0 ? (
-        <p>No hay combos disponibles</p>
-      ) : (
-        <ul>
-          {combos.map((combo, i) => (
-            <li key={i}>
-              <strong>{/*combo.nombre*/}</strong>: {combo.descripcion} — ${combo.precio}
-            </li>
-          ))}
-        </ul>
-      )}
+      <div>
+        <p><strong>Descripción:</strong> {comboActual.descripcion}</p>
+        <p><strong>Precio:</strong> ${comboActual.precio}</p>
+        <button onClick={handleSiguiente} className="btn btn-primary">Siguiente</button>
+      </div>
     </div>
   );
 };

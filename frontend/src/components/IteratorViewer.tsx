@@ -24,7 +24,7 @@ interface Pelicula {
 
 interface Props {
   estado: 'cartelera' | 'pronto' | 'fuera';
-  onSeleccionar: (pelicula: Pelicula) => void;
+  onSeleccionar?: (pelicula: Pelicula) => void;
 }
 
 const IteratorViewer: React.FC<Props> = ({ estado, onSeleccionar }) => {
@@ -58,7 +58,9 @@ const IteratorViewer: React.FC<Props> = ({ estado, onSeleccionar }) => {
       <p><strong>Género:</strong> {current.genero}</p>
       <p><strong>Duración:</strong> {current.duracion} min</p>
       <button onClick={nextPelicula} className="btn btn-secondary me-2">Siguiente</button>
-      <button onClick={() => onSeleccionar(current)} className="btn btn-primary">Seleccionar</button>
+      {onSeleccionar ? (
+        <button onClick={() => onSeleccionar(current)} className="btn btn-primary">Seleccionar</button>
+      ):( <p></p>)}
     </div>
   );
 };

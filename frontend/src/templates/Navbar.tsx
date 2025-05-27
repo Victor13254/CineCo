@@ -74,13 +74,13 @@ const Navbar = () => {
                         <Link className="nav-link" to="/">Home</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/cartelera">Cartelera</Link>
+                        <Link className="nav-link" to="/Cartelera">Cartelera</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/pronto">Pronto</Link>
+                        <Link className="nav-link" to="/Pronto">Pronto</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/comida">Comida</Link>
+                        <Link className="nav-link" to="/Comida">Comida</Link>
                     </li>
                 </ul>
 
@@ -141,10 +141,10 @@ const Navbar = () => {
                         </button>
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="perfilDropdown">
                             <li>
-                                <Link className="dropdown-item" to="/perfil">Gestionar Perfil</Link>
+                                <Link className="dropdown-item" to="/GestionPerfil">Gestionar Perfil</Link>
                             </li>
                             <li>
-                                <Link className="dropdown-item" to="/mis-reservas">Gestionar Reservas</Link>
+                                <Link className="dropdown-item" to="/GestionReservas">Gestionar Reservas</Link>
                             </li>
                             <li><hr className="dropdown-divider" /></li>
                             <li>

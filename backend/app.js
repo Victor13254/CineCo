@@ -37,6 +37,9 @@ app.use('/api/reservas', reservasRoutes);
 const funcionesRoutes = require('./routes/funcionesRoutes');
 app.use('/api/funciones', funcionesRoutes);
 
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/perfil', userRoutes);
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor backend corriendo en http://localhost:${PORT}`);

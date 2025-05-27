@@ -12,6 +12,12 @@ import Reserva from './pages/Reservas';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import ProtectedRoute from './components/ProtectedRoute';
+import Cartelera from './pages/Cartelera';
+import Pronto from './pages/Pronto';
+import Fuera from './pages/Fuera';
+import Comida from './pages/Comida';
+import GestionPerfil from './pages/perfil/GestionPerfil';
+import GestionReservas from './pages/perfil/GestionReservas';
 
 const App = () => {
   return (
@@ -22,6 +28,12 @@ const App = () => {
           <main className="flex-grow-1 container-fluid py-4">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/Cartelera" element={<Cartelera />} />
+              <Route path="/GestionPerfil" element={<ProtectedRoute><GestionPerfil /></ProtectedRoute>} />
+              <Route path="/GestionReservas" element={<ProtectedRoute><GestionReservas /></ProtectedRoute>} />
+              <Route path="/Pronto" element={<Pronto />} />
+              <Route path="/Fuera" element={<Fuera />} />
+              <Route path="/Comida" element={<Comida />} />
               <Route path="/login" element={<Login />} />
               <Route path="/registro" element={<Register />} />
               <Route path="*" element={<Home />} />

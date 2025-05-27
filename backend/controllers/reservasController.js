@@ -3,6 +3,7 @@ const BuscarFuncionHandler = require('../patterns/chain/reservas/BuscarFuncionHa
 const ValidarSillasHandler = require('../patterns/chain/reservas/ValidarSillasHandler');
 const ActualizarFuncionHandler = require('../patterns/chain/reservas/ActualizarFuncionHandler');
 const CrearReservaHandler = require('../patterns/chain/reservas/CrearReservaHandler');
+const Reserva = require('../models/reserva'); 
 
 const crearReserva = async (req, res) => {
   try {
@@ -20,4 +21,16 @@ const crearReserva = async (req, res) => {
   }
 };
 
-module.exports = { crearReserva };
+const obtenerReservasUsuario = async (req, res) => {
+  try {
+    const usuarioId = req.userId;
+    const reservas = await Reserva.find({ usuario: usuarioId });
+
+    res.json({ reservas });
+  } catch (error) {
+    console.error('Error al obtener reservas del usuario:', error.message);
+    res.status(500).json({ message: 'Error al obtener reservas' });
+  }
+};
+
+module.exports = { crearReserva, obtenerReservasUsuario };

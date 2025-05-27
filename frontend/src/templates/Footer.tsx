@@ -14,9 +14,7 @@ const Footer = () => {
             <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
               <h6 className="text-uppercase mb-4 font-weight-bold">Company name</h6>
               <p>
-                Here you can use rows and columns to organize your footer
-                content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit.
+                Ser continuamente reconocidos como la empresa de entretenimiento más importante de Colombia y una de las mejores en servicio y tecnología en Latinoamérica.   
               </p>
             </div>
 
@@ -24,11 +22,11 @@ const Footer = () => {
 
             {/* Grid column */}
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-              <h6 className="text-uppercase mb-4 font-weight-bold">Products</h6>
-              <p><a className="text-white" href="#!">MDBootstrap</a></p>
-              <p><a className="text-white" href="#!">MDWordPress</a></p>
-              <p><a className="text-white" href="#!">BrandFlow</a></p>
-              <p><a className="text-white" href="#!">Bootstrap Angular</a></p>
+              <h6 className="text-uppercase mb-4 font-weight-bold">Productos</h6>
+              <p><a className="text-white" href="/Cartelera">Cartelera</a></p>
+              <p><a className="text-white" href="/Pronto">Pronto</a></p>
+              <p><a className="text-white" href="/Comida">Comida</a></p>
+              <p><a className="text-white" href="/Fuera">Peliculas Pasadas</a></p>
             </div>
 
             <hr className="w-100 clearfix d-md-none" />
@@ -37,11 +35,10 @@ const Footer = () => {
 
             {/* Grid column */}
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 className="text-uppercase mb-4 font-weight-bold">Contact</h6>
-              <p><i className="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-              <p><i className="fas fa-envelope mr-3"></i> info@gmail.com</p>
-              <p><i className="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-              <p><i className="fas fa-print mr-3"></i> + 01 234 567 89</p>
+              <h6 className="text-uppercase mb-4 font-weight-bold">Contacto</h6>
+              <p><i className="fas fa-home mr-3"></i> Carrera 13 No. 38 – 85 - Teusaquillo</p>
+              <p><i className="fas fa-envelope mr-3"></i> sugerencias@cinecolombia.com</p>
+              <p><i className="fas fa-phone mr-3"></i> (571) 756-9898</p>
             </div>
 
             {/* Grid column */}
@@ -51,7 +48,7 @@ const Footer = () => {
               {/* Facebook */}
               <a
                 className="btn btn-outline-light btn-floating m-1"
-                href="#!"
+                href="https://www.facebook.com/cinecolombiaoficial"
                 role="button"
                 aria-label="Facebook"
               >
@@ -61,7 +58,7 @@ const Footer = () => {
               {/* Twitter */}
               <a
                 className="btn btn-outline-light btn-floating m-1"
-                href="#!"
+                href="https://twitter.com/Cine_Colombia"
                 role="button"
                 aria-label="Twitter"
               >
@@ -71,7 +68,7 @@ const Footer = () => {
               {/* Google */}
               <a
                 className="btn btn-outline-light btn-floating m-1"
-                href="#!"
+                href="https://www.cinecolombia.com/bogota"
                 role="button"
                 aria-label="Google"
               >
@@ -81,31 +78,11 @@ const Footer = () => {
               {/* Instagram */}
               <a
                 className="btn btn-outline-light btn-floating m-1"
-                href="#!"
+                href="https://www.instagram.com/cinecolombia"
                 role="button"
                 aria-label="Instagram"
               >
                 <i className="fab fa-instagram"></i>
-              </a>
-
-              {/* Linkedin */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-                aria-label="Linkedin"
-              >
-                <i className="fab fa-linkedin-in"></i>
-              </a>
-
-              {/* Github */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-                aria-label="Github"
-              >
-                <i className="fab fa-github"></i>
               </a>
             </div>
           </div>
@@ -120,7 +97,7 @@ const Footer = () => {
         className="text-center p-3"
         style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
       >
-        © 2025 Copyright: CineCo
+        © 2025 CineCo
       </div>
       {/* Copyright */}
     </footer>
