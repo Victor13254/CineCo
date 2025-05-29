@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "../../styles/Register.css";
 import { toast } from 'react-toastify';
 
 const Register = () => {
@@ -103,66 +102,186 @@ const Register = () => {
   const años = Array.from({ length: 70 }, (_, i) => new Date().getFullYear() - 19 - i);
 
   return (
-  <div className="container-fluid my-5 px-4">
-      <div className="p-4 rounded shadow-lg register-box">
-        <h2 className="mb-4 text-center text-white">Registro de Usuario</h2>
+    <div
+      className="d-flex justify-content-center align-items-center min-vh-100"
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        padding: '1rem',
+      }}
+    >
+      <div className="card shadow-lg p-4" style={{ maxWidth: '480px', width: '100%', borderRadius: '1rem' }}>
+        <h2 className="mb-4 text-center text-primary">Registro de Usuario</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label text-white">Nombres</label>
-            <input type="text" name="nombres" className="form-control" value={form.nombres} onChange={handleChange} required />
+            <label htmlFor="nombres" className="form-label">
+              Nombres
+            </label>
+            <input
+              type="text"
+              id="nombres"
+              name="nombres"
+              className="form-control"
+              value={form.nombres}
+              onChange={handleChange}
+              required
+              placeholder="Ingresa tus nombres"
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label text-white">Apellidos</label>
-            <input type="text" name="apellidos" className="form-control" value={form.apellidos} onChange={handleChange} required />
+            <label htmlFor="apellidos" className="form-label">
+              Apellidos
+            </label>
+            <input
+              type="text"
+              id="apellidos"
+              name="apellidos"
+              className="form-control"
+              value={form.apellidos}
+              onChange={handleChange}
+              required
+              placeholder="Ingresa tus apellidos"
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label text-white">Correo</label>
-            <input type="email" name="correo" className="form-control" value={form.correo} onChange={handleChange} required />
+            <label htmlFor="correo" className="form-label">
+              Correo
+            </label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              className="form-control"
+              value={form.correo}
+              onChange={handleChange}
+              required
+              placeholder="ejemplo@correo.com"
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label text-white">Confirmar correo</label>
-            <input type="email" name="confirmarCorreo" className="form-control" value={form.confirmarCorreo} onChange={handleChange} required />
+            <label htmlFor="confirmarCorreo" className="form-label">
+              Confirmar correo
+            </label>
+            <input
+              type="email"
+              id="confirmarCorreo"
+              name="confirmarCorreo"
+              className="form-control"
+              value={form.confirmarCorreo}
+              onChange={handleChange}
+              required
+              placeholder="Repite tu correo"
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label text-white">Contraseña</label>
-            <input type="password" name="contraseña" className="form-control" value={form.contraseña} onChange={handleChange} required />
+            <label htmlFor="contraseña" className="form-label">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              id="contraseña"
+              name="contraseña"
+              className="form-control"
+              value={form.contraseña}
+              onChange={handleChange}
+              required
+              placeholder="Crea una contraseña segura"
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label text-white">Confirmar contraseña</label>
-            <input type="password" name="confirmarContraseña" className="form-control" value={form.confirmarContraseña} onChange={handleChange} required />
+            <label htmlFor="confirmarContraseña" className="form-label">
+              Confirmar contraseña
+            </label>
+            <input
+              type="password"
+              id="confirmarContraseña"
+              name="confirmarContraseña"
+              className="form-control"
+              value={form.confirmarContraseña}
+              onChange={handleChange}
+              required
+              placeholder="Repite la contraseña"
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label text-white">Documento de identidad</label>
-            <input type="text" name="documento" className="form-control" value={form.documento} onChange={handleChange} required />
+            <label htmlFor="documento" className="form-label">
+              Documento de identidad
+            </label>
+            <input
+              type="text"
+              id="documento"
+              name="documento"
+              className="form-control"
+              value={form.documento}
+              onChange={handleChange}
+              required
+              placeholder="Número de documento"
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label text-white">Fecha de nacimiento</label>
+            <label className="form-label">Fecha de nacimiento</label>
             <div className="d-flex gap-2">
-              <select className="form-select" name="dia" value={form.dia} onChange={handleChange} required>
+              <select
+                className="form-select"
+                name="dia"
+                value={form.dia}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Día</option>
-                {dias.map(d => (
-                  <option key={d} value={String(d).padStart(2, '0')}>{d}</option>
+                {dias.map((d) => (
+                  <option key={d} value={String(d).padStart(2, '0')}>
+                    {d}
+                  </option>
                 ))}
               </select>
-              <select className="form-select" name="mes" value={form.mes} onChange={handleChange} required>
+              <select
+                className="form-select"
+                name="mes"
+                value={form.mes}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Mes</option>
-                {meses.map(m => (
-                  <option key={m.valor} value={m.valor}>{m.nombre}</option>
+                {meses.map((m) => (
+                  <option key={m.valor} value={m.valor}>
+                    {m.nombre}
+                  </option>
                 ))}
               </select>
-              <select className="form-select" name="anio" value={form.anio} onChange={handleChange} required>
+              <select
+                className="form-select"
+                name="anio"
+                value={form.anio}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Año</option>
-                {años.map(a => (
-                  <option key={a} value={a}>{a}</option>
+                {años.map((a) => (
+                  <option key={a} value={a}>
+                    {a}
+                  </option>
                 ))}
               </select>
             </div>
           </div>
-          <div className="mb-3">
-            <label className="form-label text-white">Celular</label>
-            <input type="tel" name="celular" className="form-control" value={form.celular} onChange={handleChange} required />
+          <div className="mb-4">
+            <label htmlFor="celular" className="form-label">
+              Celular
+            </label>
+            <input
+              type="tel"
+              id="celular"
+              name="celular"
+              className="form-control"
+              value={form.celular}
+              onChange={handleChange}
+              required
+              placeholder="Número celular"
+            />
           </div>
-          <button type="submit" className="btn btn-success w-100">Registrarse</button>
+          <button type="submit" className="btn btn-primary w-100 fw-semibold">
+            Registrarse
+          </button>
         </form>
       </div>
     </div>

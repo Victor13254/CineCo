@@ -1,9 +1,8 @@
-// backend/patterns/templateMethod/ComboTemplate.js
-
 class ComboTemplate {
   constructor() {
     this.descripcion = [];
     this.precio = 0;
+    this.imagen = ''; 
   }
 
   crearCombo() {
@@ -11,6 +10,7 @@ class ComboTemplate {
     return {
       descripcion: this.descripcion.join(' + '),
       precio: this.precio,
+      imagen: this.imagen, 
     };
   }
 
@@ -21,6 +21,10 @@ class ComboTemplate {
   agregarItem(nombre, precio) {
     this.descripcion.push(nombre);
     this.precio += precio;
+  }
+
+  setImagen(imagenStr) {
+    this.imagen = imagenStr;
   }
 }
 

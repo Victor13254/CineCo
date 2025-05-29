@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="row">
             {/* Grid column */}
             <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 className="text-uppercase mb-4 font-weight-bold">Company name</h6>
+              <h6 className="text-uppercase mb-4 font-weight-bold">Cine Co</h6>
               <p>
                 Ser continuamente reconocidos como la empresa de entretenimiento más importante de Colombia y una de las mejores en servicio y tecnología en Latinoamérica.   
               </p>

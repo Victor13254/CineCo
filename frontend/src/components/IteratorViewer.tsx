@@ -4,7 +4,7 @@ interface Silla {
   _id: string;
   numero: string;
   tipo: 'normal' | 'preferencial';
-  estado: 'disponible' | 'ocupado';
+  estado: 'disponible' | 'ocupada';
 }
 
 interface Funcion {
@@ -20,6 +20,7 @@ interface Pelicula {
   duracion: number;
   estado: 'cartelera' | 'pronto' | 'fuera';
   funciones: Funcion[];
+  imagen: string;
 }
 
 interface Props {
@@ -35,7 +36,6 @@ const IteratorViewer: React.FC<Props> = ({ estado, onSeleccionar }) => {
     fetch('http://localhost:4000/api/peliculas')
       .then(res => res.json())
       .then((data: { cartelera: Pelicula[] }) => {
-        // The API returns movies in a "cartelera" array
         const allMovies = data.cartelera;
         const filtradas = allMovies.filter(p => p.estado === estado);
         setPeliculas(filtradas);
@@ -51,18 +51,40 @@ const IteratorViewer: React.FC<Props> = ({ estado, onSeleccionar }) => {
 
   const current = peliculas[index];
 
-  return (
-    <div className="card p-4 shadow-sm">
-      <h4 className="mb-3">Película actual</h4>
-      <p><strong>Título:</strong> {current.titulo}</p>
-      <p><strong>Género:</strong> {current.genero}</p>
-      <p><strong>Duración:</strong> {current.duracion} min</p>
-      <button onClick={nextPelicula} className="btn btn-secondary me-2">Siguiente</button>
-      {onSeleccionar ? (
-        <button onClick={() => onSeleccionar(current)} className="btn btn-primary">Seleccionar</button>
-      ):( <p></p>)}
+return (
+  <div className="card p-4 shadow-sm" style={{ maxWidth: '350px', margin: 'auto' }}>
+    <h4 className="mb-4 text-center fw-semibold">Película actual</h4>
+
+    <div className="text-center mb-4">
+      <img
+        src={current.imagen}
+        alt={current.titulo}
+        className="img-fluid rounded"
+        style={{ maxWidth: '100%', height: 'auto', maxHeight: '300px', objectFit: 'cover' }}
+      />
     </div>
-  );
+
+    <p><strong>Título:</strong> {current.titulo}</p>
+    <p><strong>Género:</strong> {current.genero}</p>
+    <p><strong>Duración:</strong> {current.duracion} min</p>
+
+    <div className="d-flex justify-content-between mt-4">
+      <button onClick={nextPelicula} className="btn btn-outline-secondary px-4">
+        Siguiente
+      </button>
+
+      {onSeleccionar ? (
+        <button onClick={() => onSeleccionar(current)} className="btn btn-primary px-4">
+          Seleccionar
+        </button>
+      ) : (
+        <div></div>
+      )}
+    </div>
+  </div>
+);
+
+
 };
 
 export default IteratorViewer;

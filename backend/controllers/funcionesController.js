@@ -3,19 +3,41 @@ const Funcion = require('../models/funcion');
 // Crear una nueva función con sillas generadas automáticamente
 const crearFuncion = async (req, res) => {
   try {
-    const { sala, horario, cantidadSillasNormales, cantidadSillasPreferenciales } = req.body;
+    const {
+      sala,
+      horario,
+      cantidadSillasNormales,
+      cantidadSillasPreferenciales,
+      cantidadSillasDiscapacidad
+    } = req.body;
+
+    // Convertir horario a Date
+    const [horas, minutos] = horario.split(':');
+    const now = new Date();
+    const horarioDate = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      parseInt(horas, 10),
+      parseInt(minutos, 10)
+    );
 
     let sillas = [];
     let numero = 1;
 
     for (let i = 0; i < cantidadSillasNormales; i++) {
-      sillas.push({ numero: numero++, tipo: 'normal', estado: 'disponible' });
-    }
-    for (let i = 0; i < cantidadSillasPreferenciales; i++) {
-      sillas.push({ numero: numero++, tipo: 'preferencial', estado: 'disponible' });
+      sillas.push({ numero: `S${numero++}`, tipo: 'normal', estado: 'disponible' });
     }
 
-    const funcion = new Funcion({ sala, horario, sillas });
+    for (let i = 0; i < cantidadSillasPreferenciales; i++) {
+      sillas.push({ numero: `S${numero++}`, tipo: 'preferencial', estado: 'disponible' });
+    }
+
+    for (let i = 0; i < cantidadSillasDiscapacidad; i++) {
+      sillas.push({ numero: `S${numero++}`, tipo: 'discapacidad', estado: 'disponible' });
+    }
+
+    const funcion = new Funcion({ sala, horario: horarioDate, sillas });
     await funcion.save();
 
     res.status(201).json(funcion);
@@ -24,6 +46,7 @@ const crearFuncion = async (req, res) => {
     res.status(500).json({ error: 'Error creando la función' });
   }
 };
+
 
 // Obtener todas las funciones
 const obtenerFunciones = async (req, res) => {

@@ -8,6 +8,11 @@ const UsuarioSchema = new mongoose.Schema({
   documento: String,
   fechaNacimiento: Date,
   celular: String,
+  tipo: {
+    type: String,
+    enum: ['cliente', 'admin'],
+    default: 'cliente'
+  }
 });
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);

@@ -1,3 +1,4 @@
+const path = require('path');
 const Pelicula = require('../models/pelicula');
 const Funcion = require('../models/funcion');
 
@@ -46,7 +47,6 @@ const cambiarEstadoPelicula = async (req, res) => {
 
 const obtenerPeliculas = async (req, res) => {
   try {
-    // Traemos películas con funciones pobladas (solo sala y horario)
     const peliculas = await Pelicula.find().populate('funciones', 'sala horario sillas');
 
     const funcionesTotales = [];
@@ -61,37 +61,32 @@ const obtenerPeliculas = async (req, res) => {
       }
     });
 
-    // Mapeamos películas con las funciones completas
     const cartelera = peliculas.map(p => ({
       id: p._id,
       titulo: p.titulo,
       genero: p.genero,
       duracion: p.duracion,
       estado: p.estado,
+      imagen: p.imagen, 
       funciones: p.funciones.map(func => {
-        // Obtener el horario original
         let horario = func.horario;
-
-        // Suponiendo que horario es string tipo "15:00" o "15:00:00"
-        // o Date, convertirlo a "HH:MM"
         let hhmm;
 
         if (typeof horario === 'string') {
-          // Si es string, extraemos las primeras 5 posiciones "HH:MM"
           hhmm = horario.slice(0, 5);
         } else if (horario instanceof Date) {
-          // Si es Date, formatear con métodos Date
           const h = horario.getHours().toString().padStart(2, '0');
           const m = horario.getMinutes().toString().padStart(2, '0');
           hhmm = `${h}:${m}`;
         } else {
-          // Si viene otro formato, dejar igual (o poner vacio)
           hhmm = horario;
-        }return {
-          ...func.toObject(), // convertir documento a JS object
+        }
+
+        return {
+          ...func.toObject(),
           horario: hhmm,
         };
-      }) // array con funciones completas gracias al populate
+      })
     }));
 
     res.json({ cartelera, funcionesTotales });
@@ -101,7 +96,68 @@ const obtenerPeliculas = async (req, res) => {
   }
 };
 
+const crearPelicula = async (req, res) => {
+  const { titulo, genero, duracion, estado } = req.body;
+  const funciones = Array.isArray(req.body.funciones) ? req.body.funciones : [req.body.funciones];
+  const imagen = req.file ? `/uploads/${req.file.filename}` : '';
+
+  try {
+    const funcionesValidas = await Funcion.find({ _id: { $in: funciones } });
+
+    if (funcionesValidas.length !== funciones.length) {
+      return res.status(400).json({ error: 'Algunas funciones no son válidas' });
+    }
+
+    const nuevaPelicula = new Pelicula({
+      titulo,
+      genero,
+      duracion: parseInt(duracion, 10),
+      estado,
+      funciones,
+      imagen,
+    });
+
+    await nuevaPelicula.save();
+    res.status(201).json({ mensaje: 'Película creada correctamente', pelicula: nuevaPelicula });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al crear película' });
+  }
+};
+
+const actualizarPelicula = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titulo, genero, duracion, estado } = req.body;
+    const funciones = Array.isArray(req.body.funciones) ? req.body.funciones : [req.body.funciones];
+    const imagen = req.file ? `/uploads/${req.file.filename}` : undefined;
+
+    const updateData = {
+      ...(titulo && { titulo }),
+      ...(genero && { genero }),
+      ...(duracion && { duracion: parseInt(duracion, 10) }),
+      ...(estado && { estado }),
+      ...(funciones && { funciones }),
+      ...(imagen && { imagen }),
+    };
+
+    const peliculaActualizada = await Pelicula.findByIdAndUpdate(id, updateData, { new: true });
+
+    if (!peliculaActualizada) {
+      return res.status(404).json({ mensaje: 'Película no encontrada' });
+    }
+
+    res.status(200).json({ mensaje: 'Película actualizada correctamente', pelicula: peliculaActualizada });
+  } catch (err) {
+    console.error('Error al actualizar película:', err);
+    res.status(500).json({ error: 'Error al actualizar película' });
+  }
+};
+
+ 
 module.exports = {
   obtenerPeliculas,
-  cambiarEstadoPelicula
+  cambiarEstadoPelicula,
+  crearPelicula,
+  actualizarPelicula
 };

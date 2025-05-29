@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../middlewares/upload');
+
 const {
   obtenerPeliculas,
-  cambiarEstadoPelicula
+  cambiarEstadoPelicula,
+  crearPelicula,
+  actualizarPelicula
 } = require('../controllers/peliculasController');
 
 router.get('/', obtenerPeliculas);
-router.post('/cambiar-estado/:id', cambiarEstadoPelicula);
+router.post('/', upload.single('imagen'), crearPelicula);
+router.put('/:id/estado', cambiarEstadoPelicula);
+router.put('/:id', upload.single('imagen'), actualizarPelicula); // NUEVA RUTA
 
 module.exports = router;

@@ -13,15 +13,17 @@ const registrar = async (req, res) => {
     contraseña,
     documento,
     fechaNacimiento,
-    celular
+    celular,
+    tipo 
   } = req.body;
 
   try {
     const usuarioExistente = await Usuario.findOne({ correo });
     const cedulaExistente = await Usuario.findOne({ documento });
+
     if (usuarioExistente) {
       return res.status(400).json({ error: 'El correo ya está registrado' });
-    }else if (cedulaExistente){
+    } else if (cedulaExistente) {
       return res.status(400).json({ error: 'El documento ya está registrado' });
     }
 
@@ -35,6 +37,7 @@ const registrar = async (req, res) => {
       documento,
       fechaNacimiento: new Date(fechaNacimiento),
       celular,
+      tipo: tipo || undefined // si no se envía, el modelo usará "cliente" por default
     });
 
     await nuevoUsuario.save();
@@ -56,18 +59,22 @@ const login = async (req, res) => {
     const esValida = await bcrypt.compare(contraseña, usuario.contraseña);
     if (!esValida) return res.status(401).json({ error: 'Contraseña incorrecta' });
 
-    const token = jwt.sign({ id: usuario._id, nombre: usuario.nombre }, SECRET, {
-      expiresIn: '2h',
-    });
-    
+    const token = jwt.sign(
+      { id: usuario._id, nombre: usuario.nombre, tipo: usuario.tipo },
+      SECRET,
+      { expiresIn: '2h' }
+    );
+
     res.status(200).json({
       token,
       usuario: {
         nombre: `${usuario.nombre} ${usuario.apellidos}`,
         correo: usuario.correo,
+        tipo: usuario.tipo
       },
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Error en el login' });
   }
 };
